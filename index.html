@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table to CSV Exporter — every table on the page, as CSV</title>
+<meta name="description" content="A Chrome extension that finds every table on the page you are viewing and saves the ones you pick as CSV.">
+<link rel="canonical" href="https://orca-iruka-222.github.io/Table-csv-conversion/">
+<link rel="alternate" hreflang="x-default" href="https://orca-iruka-222.github.io/Table-csv-conversion/">
+<link rel="alternate" hreflang="en" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=en">
+<link rel="alternate" hreflang="ja" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=ja">
+<link rel="alternate" hreflang="es" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=es">
+<link rel="alternate" hreflang="pt-BR" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=pt-BR">
+<link rel="alternate" hreflang="de" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=de">
+<link rel="alternate" hreflang="fr" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=fr">
+<link rel="alternate" hreflang="ko" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=ko">
+<link rel="alternate" hreflang="zh-TW" href="https://orca-iruka-222.github.io/Table-csv-conversion/?lang=zh-TW">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #16181d; --muted: #5b6470; --line: #e6e8ec;
+    --card: #fafbfc; --accent: #127a52; --accent-fg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181b; --fg: #e8e8ea; --muted: #9aa0a6; --line: #2e3035;
+      --card: #1e2024; --accent: #3fbb89; --accent-fg: #10231b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.75 "Segoe UI", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+  a { color: var(--accent); }
+
+  .topbar { display: flex; justify-content: flex-end; padding: 12px 20px 0; }
+  #lang {
+    font: inherit; font-size: 13px; padding: 5px 8px; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+  }
+
+  header { padding: 40px 0; text-align: center; }
+  .logo {
+    width: 56px; height: 56px; margin: 0 auto 20px; border-radius: 13px;
+    background: var(--accent); display: grid; place-items: center;
+  }
+  .logo svg { width: 34px; height: 34px; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.3; margin: 0 0 14px; letter-spacing: -.02em; }
+  .lead { font-size: 1.05rem; color: var(--muted); margin: 0 auto; max-width: 640px; }
+
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
+  .btn {
+    display: inline-block; padding: 13px 28px; border-radius: 8px;
+    font-weight: 600; text-decoration: none; border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-fg); }
+  .btn-ghost { border-color: var(--line); color: var(--fg); }
+  .btn-soon { border-color: var(--line); color: var(--muted); cursor: default; }
+  .cta-note { margin-top: 14px; font-size: .85rem; color: var(--muted); text-align: center; }
+
+  /* 実際のポップアップ画面の再現 */
+  .shot {
+    margin: 48px auto 0; max-width: 440px; border: 1px solid var(--line);
+    border-radius: 12px; background: var(--bg); overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,.10);
+    font-size: 13px; text-align: left;
+  }
+  .shot-bar {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .shot-bar b { font-size: 13px; }
+  .shot-bar .pill {
+    margin-left: auto; font-size: 10px; padding: 2px 8px; border-radius: 99px;
+    border: 1px solid var(--accent); color: var(--accent); font-weight: 600;
+  }
+  .shot-body { padding: 10px 12px 14px; }
+  .shot-status {
+    background: var(--card); color: var(--muted); font-size: 11.5px;
+    padding: 6px 9px; border-radius: 6px; margin-bottom: 10px;
+  }
+  .shot-item {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 8px;
+    align-items: start; padding: 9px 0; border-top: 1px solid var(--line);
+  }
+  .shot-item .mark { width: 14px; height: 14px; border-radius: 3px; background: var(--accent); margin-top: 3px; }
+  .shot-item .nm { font-weight: 600; }
+  .shot-item .sub { color: var(--muted); font-size: 11px; }
+  .shot-item .tag { font-size: 9.5px; color: var(--muted); background: var(--card); padding: 2px 6px; border-radius: 99px; }
+  .peek { margin-top: 6px; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
+  .peek table { border-collapse: collapse; width: 100%; font-size: 10.5px; }
+  .peek td { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 2px 6px; color: var(--muted); white-space: nowrap; }
+  .peek tr:last-child td { border-bottom: none; }
+  .peek td:last-child { border-right: none; }
+  .peek tr.head td { background: var(--card); color: var(--fg); font-weight: 600; }
+  .shot-btn {
+    margin-top: 12px; text-align: center; background: var(--accent); color: var(--accent-fg);
+    padding: 9px; border-radius: 6px; font-weight: 700; font-size: 12.5px;
+  }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 1.35rem; margin: 0 0 8px; letter-spacing: -.01em; }
+  .sec-lead { color: var(--muted); margin: 0 0 28px; }
+
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+  .plans { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .plan { border: 1px solid var(--line); border-radius: 12px; padding: 24px; background: var(--card); }
+  .plan.featured { border-color: var(--accent); border-width: 2px; }
+  .plan h3 { margin: 0 0 4px; font-size: 1rem; color: var(--muted); font-weight: 600; }
+  .price { font-size: 2rem; font-weight: 700; letter-spacing: -.02em; }
+  .price small { font-size: .8rem; font-weight: 500; color: var(--muted); margin-left: 6px; }
+  .plan ul { margin: 16px 0 0; padding-left: 1.1em; color: var(--muted); font-size: .92rem; }
+  .plan li { margin: 5px 0; }
+  .plan .btn { margin-top: 20px; width: 100%; text-align: center; }
+
+  dl { margin: 0; }
+  dt { font-weight: 600; margin-top: 22px; }
+  dd { margin: 6px 0 0; color: var(--muted); }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 32px 0 56px;
+    color: var(--muted); font-size: .88rem; text-align: center;
+  }
+  footer a { margin: 0 8px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <select id="lang" aria-label="Language"></select>
+</div>
+
+<header class="wrap">
+  <div class="logo" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4.5" y="5" width="23" height="13.5" fill="#fff"/>
+      <rect x="4.5" y="9" width="23" height="1.2" fill="#127a52"/>
+      <rect x="12.2" y="10.2" width="1.2" height="8.3" fill="#127a52"/>
+      <rect x="19.8" y="10.2" width="1.2" height="8.3" fill="#127a52"/>
+      <rect x="4.5" y="14" width="23" height="1.2" fill="#127a52"/>
+      <rect x="14.2" y="20" width="3.6" height="4.6" fill="#fff"/>
+      <path d="M10.6 23.8h10.8L16 29.2z" fill="#fff"/>
+    </svg>
+  </div>
+  <h1 data-i18n="h1">Every table on the page, as CSV</h1>
+  <p class="lead" data-i18n="lead"></p>
+
+  <div class="cta">
+    <a class="btn btn-soon" data-link="store" data-i18n="ctaSoon"></a>
+    <a class="btn btn-ghost" href="#pricing" data-i18n="ctaPricing"></a>
+    <a class="btn btn-ghost" href="demo/" data-i18n="ctaDemo"></a>
+  </div>
+  <p class="cta-note" data-i18n="ctaNote"></p>
+
+  <div class="shot" aria-label="Extension screenshot">
+    <div class="shot-bar"><b>Table to CSV</b><span class="pill" data-i18n="shotPlan"></span></div>
+    <div class="shot-body">
+      <div class="shot-status" data-i18n="shotStatus"></div>
+
+      <div class="shot-item">
+        <span class="mark"></span>
+        <span>
+          <span class="nm" data-i18n="shotT1"></span><br>
+          <span class="sub" data-i18n="shotT1sub"></span>
+          <span class="peek">
+            <table>
+              <tr class="head"><td>2025</td><td>Q1</td><td>Q2</td><td>Q3</td></tr>
+              <tr><td>Shibuya</td><td>1,234</td><td>2,010</td><td>1,870</td></tr>
+              <tr><td>Shinjuku</td><td>2,000</td><td>3,100</td><td>2,940</td></tr>
+            </table>
+          </span>
+        </span>
+        <span class="tag" data-i18n="shotTag"></span>
+      </div>
+
+      <div class="shot-item">
+        <span class="mark"></span>
+        <span>
+          <span class="nm" data-i18n="shotT2"></span><br>
+          <span class="sub" data-i18n="shotT2sub"></span>
+        </span>
+        <span class="tag" data-i18n="shotTagGrid"></span>
+      </div>
+
+      <div class="shot-btn" data-i18n="shotBtn"></div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap">
+  <h2 data-i18n="f1"></h2>
+  <p class="sec-lead" data-i18n="f1lead"></p>
+  <div class="grid">
+    <div class="card"><h3 data-i18n="c1t"></h3><p data-i18n="c1b"></p></div>
+    <div class="card"><h3 data-i18n="c2t"></h3><p data-i18n="c2b"></p></div>
+    <div class="card"><h3 data-i18n="c3t"></h3><p data-i18n="c3b"></p></div>
+    <div class="card"><h3 data-i18n="c4t"></h3><p data-i18n="c4b"></p></div>
+  </div>
+</section>
+
+<section class="wrap" id="pricing">
+  <h2 data-i18n="pt"></h2>
+  <p class="sec-lead" data-i18n="plead"></p>
+  <div class="plans">
+    <div class="plan">
+      <h3 data-i18n="freeName"></h3>
+      <div class="price">¥0</div>
+      <ul>
+        <li data-i18n="fi1"></li>
+        <li data-i18n="fi2"></li>
+        <li data-i18n="fi3"></li>
+        <li data-i18n="fi4"></li>
+      </ul>
+      <a class="btn btn-soon" data-link="store" data-ready-class="btn-ghost" data-i18n="ctaSoon"></a>
+    </div>
+    <div class="plan featured">
+      <h3 data-i18n="proName"></h3>
+      <div class="price">¥500<small data-i18n="priceNote"></small></div>
+      <ul>
+        <li data-i18n="pi1"></li>
+        <li data-i18n="pi2"></li>
+        <li data-i18n="pi3"></li>
+        <li data-i18n="pi4"></li>
+        <li data-i18n="pi5"></li>
+      </ul>
+      <a class="btn btn-soon" data-link="checkout" data-i18n="buySoon"></a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 data-i18n="faqt"></h2>
+  <dl>
+    <dt data-i18n="q1"></dt><dd data-i18n="a1"></dd>
+    <dt data-i18n="q2"></dt><dd data-i18n="a2"></dd>
+    <dt data-i18n="q3"></dt><dd data-i18n="a3"></dd>
+    <dt data-i18n="q4"></dt><dd data-i18n="a4"></dd>
+    <dt data-i18n="q5"></dt><dd data-i18n="a5"></dd>
+    <dt data-i18n="q6"></dt><dd data-i18n="a6"></dd>
+  </dl>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="privacy.html" data-i18n="privacy"></a>
+    <a href="https://github.com/ORCA-IRUKA-222/Table-csv-conversion/issues" data-i18n="contact"></a>
+    <p><span data-i18n="footNote"></span><br>© 2026 ORCA</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

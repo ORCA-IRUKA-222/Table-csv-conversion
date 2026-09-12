@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample page — Table to CSV Exporter</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../favicon.png">
+<style>
+  :root { --bg:#fff; --fg:#16181d; --muted:#5b6470; --line:#dfe3e8; --card:#f7f8fa; --accent:#127a52; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181b; --fg:#e8e8ea; --muted:#9aa0a6; --line:#31343a; --card:#1e2024; --accent:#3fbb89; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:15px/1.7 "Segoe UI","Hiragino Sans","Yu Gothic UI",system-ui,sans-serif; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 28px 20px 64px; }
+  a { color: var(--accent); }
+  .nav { font-size:.88rem; margin: 0 0 24px; color: var(--muted); }
+  h1 { font-size:1.6rem; margin:0 0 6px; letter-spacing:-.02em; }
+  .intro { color:var(--muted); margin:0 0 32px; }
+  h2 { font-size:1.05rem; margin:34px 0 4px; }
+  .note { color:var(--muted); font-size:.87rem; margin:0 0 12px; }
+
+  table.data { border-collapse: collapse; width:100%; font-size:.92rem; }
+  table.data th, table.data td { border:1px solid var(--line); padding:7px 11px; text-align:left; }
+  table.data thead th { background:var(--card); font-weight:600; white-space:nowrap; }
+  table.data td.num { text-align:right; font-variant-numeric: tabular-nums; }
+  table.data .down { color:#b91c1c; }
+  @media (prefers-color-scheme: dark) { table.data .down { color:#f87171; } }
+
+  .grid { border:1px solid var(--line); border-radius:8px; overflow:hidden; font-size:.92rem; }
+  .grid [role="row"] { display:grid; grid-template-columns: 1.2fr 1.2fr 1fr .7fr; }
+  .grid [role="row"] + [role="row"] { border-top:1px solid var(--line); }
+  .grid [role="columnheader"] { background:var(--card); font-weight:600; }
+  .grid [role="columnheader"], .grid [role="gridcell"] { padding:7px 11px; }
+
+  table.layout { width:100%; border-collapse:collapse; margin-top:6px; }
+  table.layout td { padding:14px 16px; background:var(--card); border:1px solid var(--line); border-radius:8px; }
+  table.layout td strong { display:block; margin-bottom:2px; }
+
+  .pager { display:flex; align-items:center; gap:14px; margin-top:30px;
+           border-top:1px solid var(--line); padding-top:16px; font-size:.92rem; }
+  .pager .spacer { flex:1; }
+  .pager .muted { color:var(--muted); }
+  .pagenote { color:var(--muted); font-size:.87rem; margin:8px 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="nav"><a href="../">← Table to CSV Exporter</a> &nbsp;·&nbsp; <a href="ja/page3.html">Japanese version</a></p>
+
+<h1>Quarterly report</h1>
+<p class="intro">A page to try the extension on. Click the toolbar icon and it will list what it finds here.</p>
+
+<h2>Sales by store</h2>
+<p class="note">Two header rows, merged cells, thousands separators and accounting negatives. Store names are links, so "add link URLs as columns" has something to pick up.</p>
+<table class="data">
+  <caption style="display:none">Sales by store</caption>
+  <thead><tr><th rowspan="2">Store</th><th colspan="3">2025</th><th rowspan="2">YoY</th></tr>
+    <tr><th>Q1</th><th>Q2</th><th>Q3</th></tr></thead>
+  <tbody><tr><td><a href="store.html?id=13">Kichijoji</a></td><td class="num">28,244</td><td class="num">30,200</td><td class="num">29,010</td><td class="num down">▲6.6%</td></tr>
+    <tr><td><a href="store.html?id=14">Nakano</a></td><td class="num">29,614</td><td class="num">31,570</td><td class="num">30,380</td><td class="num down">▲2.9%</td></tr>
+    <tr><td><a href="store.html?id=15">Meguro</a></td><td class="num">30,984</td><td class="num">32,940</td><td class="num">31,750</td><td class="num">0.8%</td></tr>
+    <tr><td><a href="store.html?id=16">Shinagawa</a></td><td class="num">32,354</td><td class="num">34,310</td><td class="num">33,120</td><td class="num">4.5%</td></tr>
+    <tr><td><a href="store.html?id=17">Kamata</a></td><td class="num">33,724</td><td class="num">35,680</td><td class="num">34,490</td><td class="num">8.2%</td></tr>
+    <tr><td><a href="store.html?id=18">Kokubunji</a></td><td class="num">35,094</td><td class="num">37,050</td><td class="num">35,860</td><td class="num">11.9%</td></tr></tbody>
+</table>
+<nav class="pager">
+  <a href="page2.html">‹ Previous</a>
+  <span class="spacer"></span>
+  <span class="muted">Page 3 of 3</span>
+  <span class="spacer"></span>
+  <span class="muted">Next ›</span>
+  </nav>
+<p class="pagenote">Turn on "follow next page" and all 3 pages come out as one CSV.</p>
+
+<h2>Staff</h2>
+<p class="note">Built from div elements with ARIA roles, not a <table>. Many business systems look like this.</p>
+<div class="grid" role="table" aria-label="Staff"><div role="row"><span role="columnheader">Name</span><span role="columnheader">Department</span><span role="columnheader">Office</span><span role="columnheader">Active</span></div>
+  <div role="row" aria-rowindex="2"><span role="gridcell">Tanaka</span><span role="gridcell">Engineering</span><span role="gridcell">Tokyo</span><span role="gridcell"><input type="checkbox" checked aria-label="Active"></span></div>
+  <div role="row" aria-rowindex="3"><span role="gridcell">Suzuki</span><span role="gridcell">Sales</span><span role="gridcell">Osaka</span><span role="gridcell"><input type="checkbox" checked aria-label="Active"></span></div>
+  <div role="row" aria-rowindex="4"><span role="gridcell">Sato</span><span role="gridcell">Support</span><span role="gridcell">Fukuoka</span><span role="gridcell"><input type="checkbox" aria-label="Active"></span></div>
+  <div role="row" aria-rowindex="5"><span role="gridcell">Takahashi</span><span role="gridcell">Engineering</span><span role="gridcell">Tokyo</span><span role="gridcell"><input type="checkbox" checked aria-label="Active"></span></div></div>
+
+<h2 style="margin-top:38px">&nbsp;</h2>
+<p class="note">The box below is a table used only for page layout. The extension leaves it out.</p>
+<table class="layout" role="presentation">
+  <tr><td><strong>Notice</strong>This block is laid out with a table, but it is not data.</td></tr>
+</table>
+
+</div>
+</body>
+</html>

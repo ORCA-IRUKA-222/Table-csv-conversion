@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>試用ページ — 表をCSVに保存</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../favicon.png">
+<style>
+  :root { --bg:#fff; --fg:#16181d; --muted:#5b6470; --line:#dfe3e8; --card:#f7f8fa; --accent:#127a52; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181b; --fg:#e8e8ea; --muted:#9aa0a6; --line:#31343a; --card:#1e2024; --accent:#3fbb89; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:15px/1.7 "Segoe UI","Hiragino Sans","Yu Gothic UI",system-ui,sans-serif; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 28px 20px 64px; }
+  a { color: var(--accent); }
+  .nav { font-size:.88rem; margin: 0 0 24px; color: var(--muted); }
+  h1 { font-size:1.6rem; margin:0 0 6px; letter-spacing:-.02em; }
+  .intro { color:var(--muted); margin:0 0 32px; }
+  h2 { font-size:1.05rem; margin:34px 0 4px; }
+  .note { color:var(--muted); font-size:.87rem; margin:0 0 12px; }
+
+  table.data { border-collapse: collapse; width:100%; font-size:.92rem; }
+  table.data th, table.data td { border:1px solid var(--line); padding:7px 11px; text-align:left; }
+  table.data thead th { background:var(--card); font-weight:600; white-space:nowrap; }
+  table.data td.num { text-align:right; font-variant-numeric: tabular-nums; }
+  table.data .down { color:#b91c1c; }
+  @media (prefers-color-scheme: dark) { table.data .down { color:#f87171; } }
+
+  .grid { border:1px solid var(--line); border-radius:8px; overflow:hidden; font-size:.92rem; }
+  .grid [role="row"] { display:grid; grid-template-columns: 1.2fr 1.2fr 1fr .7fr; }
+  .grid [role="row"] + [role="row"] { border-top:1px solid var(--line); }
+  .grid [role="columnheader"] { background:var(--card); font-weight:600; }
+  .grid [role="columnheader"], .grid [role="gridcell"] { padding:7px 11px; }
+
+  table.layout { width:100%; border-collapse:collapse; margin-top:6px; }
+  table.layout td { padding:14px 16px; background:var(--card); border:1px solid var(--line); border-radius:8px; }
+  table.layout td strong { display:block; margin-bottom:2px; }
+
+  .pager { display:flex; align-items:center; gap:14px; margin-top:30px;
+           border-top:1px solid var(--line); padding-top:16px; font-size:.92rem; }
+  .pager .spacer { flex:1; }
+  .pager .muted { color:var(--muted); }
+  .pagenote { color:var(--muted); font-size:.87rem; margin:8px 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="nav"><a href="../../">← 表をCSVに保存</a> &nbsp;·&nbsp; <a href="../page3.html">English version</a></p>
+
+<h1>四半期レポート</h1>
+<p class="intro">拡張機能を試すためのページです。ツールバーのアイコンを押すと、ここにある表が一覧に出ます。</p>
+
+<h2>店舗別 売上</h2>
+<p class="note">見出し2行・結合セル・桁区切り・会計表記の負数を含みます。店舗名はリンクなので、「リンクのURLを列として追加」も試せます。</p>
+<table class="data">
+  <caption style="display:none">店舗別 売上</caption>
+  <thead><tr><th rowspan="2">店舗</th><th colspan="3">2025年</th><th rowspan="2">前年比</th></tr>
+    <tr><th>第1四半期</th><th>第2四半期</th><th>第3四半期</th></tr></thead>
+  <tbody><tr><td><a href="store.html?id=13">吉祥寺</a></td><td class="num">28,244</td><td class="num">30,200</td><td class="num">29,010</td><td class="num down">▲6.6%</td></tr>
+    <tr><td><a href="store.html?id=14">中野</a></td><td class="num">29,614</td><td class="num">31,570</td><td class="num">30,380</td><td class="num down">▲2.9%</td></tr>
+    <tr><td><a href="store.html?id=15">目黒</a></td><td class="num">30,984</td><td class="num">32,940</td><td class="num">31,750</td><td class="num">0.8%</td></tr>
+    <tr><td><a href="store.html?id=16">品川</a></td><td class="num">32,354</td><td class="num">34,310</td><td class="num">33,120</td><td class="num">4.5%</td></tr>
+    <tr><td><a href="store.html?id=17">蒲田</a></td><td class="num">33,724</td><td class="num">35,680</td><td class="num">34,490</td><td class="num">8.2%</td></tr>
+    <tr><td><a href="store.html?id=18">国分寺</a></td><td class="num">35,094</td><td class="num">37,050</td><td class="num">35,860</td><td class="num">11.9%</td></tr></tbody>
+</table>
+<nav class="pager">
+  <a href="page2.html">‹ 前へ</a>
+  <span class="spacer"></span>
+  <span class="muted">3 / 3 ページ</span>
+  <span class="spacer"></span>
+  <span class="muted">次へ ›</span>
+  </nav>
+<p class="pagenote">「ページ送りをたどる」をオンにすると、3 ページ分が1つのCSVになります。</p>
+
+<h2>社員一覧</h2>
+<p class="note"><table> ではなく、div と ARIA 属性で組んだ表です。業務システムの一覧画面によくある形です。</p>
+<div class="grid" role="table" aria-label="社員一覧"><div role="row"><span role="columnheader">氏名</span><span role="columnheader">部署</span><span role="columnheader">勤務地</span><span role="columnheader">在籍</span></div>
+  <div role="row" aria-rowindex="2"><span role="gridcell">田中</span><span role="gridcell">開発</span><span role="gridcell">東京</span><span role="gridcell"><input type="checkbox" checked aria-label="在籍"></span></div>
+  <div role="row" aria-rowindex="3"><span role="gridcell">鈴木</span><span role="gridcell">営業</span><span role="gridcell">大阪</span><span role="gridcell"><input type="checkbox" checked aria-label="在籍"></span></div>
+  <div role="row" aria-rowindex="4"><span role="gridcell">佐藤</span><span role="gridcell">サポート</span><span role="gridcell">福岡</span><span role="gridcell"><input type="checkbox" aria-label="在籍"></span></div>
+  <div role="row" aria-rowindex="5"><span role="gridcell">高橋</span><span role="gridcell">開発</span><span role="gridcell">東京</span><span role="gridcell"><input type="checkbox" checked aria-label="在籍"></span></div></div>
+
+<h2 style="margin-top:38px">&nbsp;</h2>
+<p class="note">下の枠は、見た目を組むためだけの表です。拡張機能はこれを除外します。</p>
+<table class="layout" role="presentation">
+  <tr><td><strong>お知らせ</strong>この枠は表で組んでいますが、データではありません。</td></tr>
+</table>
+
+</div>
+</body>
+</html>

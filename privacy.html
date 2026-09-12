@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Table to CSV Exporter</title>
+<meta name="description" content="Privacy policy for the Table to CSV Exporter Chrome extension. No browsing data is collected or sent anywhere.">
+<link rel="canonical" href="https://orca-iruka-222.github.io/Table-csv-conversion/privacy.html">
+<link rel="alternate" hreflang="ja" href="https://orca-iruka-222.github.io/Table-csv-conversion/privacy.ja.html">
+<style>
+  :root { --bg:#fff; --fg:#16181d; --muted:#5b6470; --line:#e6e8ec; --card:#fafbfc; --accent:#127a52; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181b; --fg:#e8e8ea; --muted:#9aa0a6; --line:#2e3035; --card:#1e2024; --accent:#3fbb89; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.8 "Segoe UI", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 72px; }
+  a { color: var(--accent); }
+  h1 { font-size: 1.7rem; margin: 0 0 6px; letter-spacing: -.02em; }
+  .updated { color: var(--muted); font-size: .88rem; margin: 0 0 36px; }
+  h2 { font-size: 1.1rem; margin: 40px 0 10px; }
+  p, li { color: var(--fg); }
+  .muted { color: var(--muted); }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: .93rem; }
+  th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--card); font-weight: 600; white-space: nowrap; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: .9em; background: var(--card); padding: 1px 5px; border-radius: 4px; }
+  .nav { margin-bottom: 28px; font-size: .9rem; }
+  footer { border-top: 1px solid var(--line); margin-top: 48px; padding-top: 24px; color: var(--muted); font-size: .88rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="nav"><a href="./">← Table to CSV Exporter</a> &nbsp;·&nbsp; <a href="privacy.ja.html">日本語</a></p>
+
+<h1>Privacy Policy</h1>
+<p class="updated">Table to CSV Exporter (Chrome extension) — last updated 12 September 2026</p>
+
+<h2>1. What is collected</h2>
+<p>This extension collects <strong>no personal information and no information about your browsing</strong>. Specifically, none of the following is collected, recorded or transmitted:</p>
+<ul>
+  <li>The URLs of pages you visit, or your browsing history</li>
+  <li>Page content, the contents of tables, or any text within them</li>
+  <li>Personal information such as your name, email address or IP address</li>
+  <li>Location</li>
+  <li>Usage logs or analytics of any kind</li>
+</ul>
+<p>There is no analytics tooling (no page analytics, no crash reporting) and no advertising.</p>
+
+<h2>2. What is stored on your device</h2>
+<p>The following is kept in the browser's extension storage (<code>chrome.storage.local</code>), <strong>on your device only</strong>. It is never sent to any server.</p>
+<ul>
+  <li>Your settings (header-row handling, delimiter, destination subfolder, interface language, and so on)</li>
+  <li>The number of tables exported today on the free tier (it resets when the date changes)</li>
+  <li>Your paid licence key and its validation state</li>
+</ul>
+<p>All of it is removed when you uninstall the extension.</p>
+<p>The contents of the tables that were read are held in a temporary area that lasts until the browser closes (<code>chrome.storage.session</code>), so that reopening the popup shows them again. They are discarded when you quit the browser. This too stays on your device and is never transmitted.</p>
+
+<h2>3. What leaves your device</h2>
+<p>There are exactly two cases in which the extension communicates with anything outside your browser.</p>
+
+<p><strong>(1) Licence validation.</strong> Only if you enter a paid licence key, that key is sent to the licence validation API of Lemon Squeezy (<a href="https://www.lemonsqueezy.com/" target="_blank" rel="noopener">lemonsqueezy.com</a>), the payment provider, in order to verify it. Only the key you typed is sent; no browsing information and no table content is included. If you stay on the free version, this request never happens.</p>
+
+<p><strong>(2) Fetching pages.</strong> Only if you turn on "follow next page" or "also read tables on linked pages", the extension fetches pages <strong>from the site you are currently viewing, and no other</strong>. This is the same kind of request your browser makes when you visit the page yourself; what comes back is processed on your device to extract the tables and is not sent to anyone, including the developer.</p>
+
+<p>The CSV files themselves are assembled on your device. Table contents never pass through any server.</p>
+
+<h2>4. Why each permission is needed</h2>
+<table>
+  <tr><th>Permission</th><th>Purpose</th></tr>
+  <tr><td><code>activeTab</code></td><td>To detect tables on the page you are viewing, and only when you click the toolbar icon</td></tr>
+  <tr><td><code>scripting</code></td><td>To inject the table-detection script into the page you are viewing</td></tr>
+  <tr><td><code>downloads</code></td><td>To save the CSV files that were created</td></tr>
+  <tr><td><code>storage</code></td><td>To keep settings, today's count and licence state on your device</td></tr>
+  <tr><td><code>offscreen</code></td><td>To build the CSV file (creating a Blob URL) and to parse fetched HTML. The extension's background service worker has neither capability</td></tr>
+  <tr><td><code>https://api.lemonsqueezy.com/*</code></td><td>To validate a licence key</td></tr>
+  <tr><td>Access to other sites (optional)</td><td>To fetch pages of a site you allow, when you use "follow next page" or "also read tables on linked pages". This is not requested at install time; it is requested only when you use the feature, and only for that one site</td></tr>
+</table>
+
+<h2>5. Sharing with third parties</h2>
+<p>Your data is never sold, transferred or shared with third parties.</p>
+
+<h2>6. Children's privacy</h2>
+<p>This extension is not directed at children, and no information is knowingly collected from children.</p>
+
+<h2>7. Changes to this policy</h2>
+<p>If this policy changes, this page is updated and the date above is revised. Significant changes are also noted in the extension's release notes.</p>
+
+<h2>8. Contact</h2>
+<p>For questions about this policy or the extension:</p>
+<p>ORCA — <a href="https://github.com/ORCA-IRUKA-222/Table-csv-conversion/issues" target="_blank" rel="noopener">github.com/ORCA-IRUKA-222/Table-csv-conversion/issues</a></p>
+
+<footer>© 2026 ORCA</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プライバシーポリシー — 表をCSVに保存</title>
+<meta name="description" content="Chrome拡張機能「表をCSVに保存」のプライバシーポリシー。閲覧情報を収集も送信もしません。">
+<link rel="canonical" href="https://orca-iruka-222.github.io/Table-csv-conversion/privacy.ja.html">
+<link rel="alternate" hreflang="en" href="https://orca-iruka-222.github.io/Table-csv-conversion/privacy.html">
+<style>
+  :root { --bg:#fff; --fg:#16181d; --muted:#5b6470; --line:#e6e8ec; --card:#fafbfc; --accent:#127a52; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181b; --fg:#e8e8ea; --muted:#9aa0a6; --line:#2e3035; --card:#1e2024; --accent:#3fbb89; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.9 "Segoe UI", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 72px; }
+  a { color: var(--accent); }
+  h1 { font-size: 1.7rem; margin: 0 0 6px; letter-spacing: -.02em; }
+  .updated { color: var(--muted); font-size: .88rem; margin: 0 0 36px; }
+  h2 { font-size: 1.1rem; margin: 40px 0 10px; }
+  .muted { color: var(--muted); }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: .93rem; }
+  th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--card); font-weight: 600; white-space: nowrap; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: .9em; background: var(--card); padding: 1px 5px; border-radius: 4px; }
+  .nav { margin-bottom: 28px; font-size: .9rem; }
+  footer { border-top: 1px solid var(--line); margin-top: 48px; padding-top: 24px; color: var(--muted); font-size: .88rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="nav"><a href="./">← 表をCSVに保存</a> &nbsp;·&nbsp; <a href="privacy.html">English</a></p>
+
+<h1>プライバシーポリシー</h1>
+<p class="updated">表をCSVに保存（Chrome拡張機能） — 最終更新日: 2026年9月12日</p>
+
+<h2>1. 収集する情報</h2>
+<p>本拡張機能は、利用者の個人情報および閲覧に関する情報を<strong>一切収集しません</strong>。具体的には、以下のいずれも収集・記録・送信しません。</p>
+<ul>
+  <li>閲覧したページのURLや閲覧履歴</li>
+  <li>ページの内容、表の中身、そこに含まれるテキスト</li>
+  <li>氏名・メールアドレス・IPアドレスなどの個人情報</li>
+  <li>位置情報</li>
+  <li>操作ログ、利用状況の統計</li>
+</ul>
+<p>解析ツール（アクセス解析・クラッシュレポート等）および広告は使用していません。</p>
+
+<h2>2. 端末内に保存される情報</h2>
+<p>以下の情報を、ブラウザの拡張機能用ストレージ（<code>chrome.storage.local</code>）に<strong>利用者の端末内にのみ</strong>保存します。外部のサーバーへ送信されることはありません。</p>
+<ul>
+  <li>拡張機能の設定（見出し行の扱い、区切り文字、保存先サブフォルダ、表示言語など）</li>
+  <li>無料版の本日の書き出し件数（日付が変わると戻ります）</li>
+  <li>有料版のライセンスキーおよびその検証状態</li>
+</ul>
+<p>これらは拡張機能をアンインストールすると削除されます。</p>
+<p>読み取った表の中身は、ポップアップを開き直したときに再表示するため、ブラウザを閉じるまでの一時領域（<code>chrome.storage.session</code>）に置かれます。ブラウザを終了すると消えます。これも端末内に留まり、外部へ送信されることはありません。</p>
+
+<h2>3. 外部への送信</h2>
+<p>外部へ通信を行うのは、次の2つの場合に限られます。</p>
+
+<p><strong>(1) ライセンスの検証</strong><br>
+有料版のライセンスキーを入力した場合に限り、その検証のため、キーを決済事業者である Lemon Squeezy（<a href="https://www.lemonsqueezy.com/" target="_blank" rel="noopener">lemonsqueezy.com</a>）のライセンス検証APIへ送信します。送信するのは利用者が入力したライセンスキーのみで、閲覧情報や表の内容は含みません。無料版のままご利用の場合、この通信は発生しません。</p>
+
+<p><strong>(2) ページの取得</strong><br>
+利用者が「ページ送りをたどる」「リンク先ページの表も取得」を有効にした場合に限り、<strong>利用者が閲覧しているサイトに対してのみ</strong>、そのページを取得する通信を行います。これは通常のブラウザによる閲覧と同じ通信であり、取得した内容は表を取り出すために端末内で処理されるだけで、開発者を含む第三者に送信されることはありません。</p>
+
+<p>保存されるCSVファイルは、利用者の端末内で組み立てられます。表の内容が外部のサーバーを経由することはありません。</p>
+
+<h2>4. 権限の利用目的</h2>
+<table>
+  <tr><th>権限</th><th>目的</th></tr>
+  <tr><td><code>activeTab</code></td><td>アイコンをクリックした時に限り、表示中のページから表を検出するため</td></tr>
+  <tr><td><code>scripting</code></td><td>表示中のページに検出スクリプトを注入するため</td></tr>
+  <tr><td><code>downloads</code></td><td>作成したCSVファイルを保存するため</td></tr>
+  <tr><td><code>storage</code></td><td>設定・本日の件数・ライセンス情報を端末内に保存するため</td></tr>
+  <tr><td><code>offscreen</code></td><td>CSVファイルの組み立て（Blob URL の作成）と、取得したHTMLの解析のため。拡張機能の背景処理（service worker）にはこれらの機能が無いためです</td></tr>
+  <tr><td><code>https://api.lemonsqueezy.com/*</code></td><td>ライセンスキーの検証のため</td></tr>
+  <tr><td>任意のサイトへのアクセス（任意）</td><td>「ページ送りをたどる」「リンク先ページの表も取得」を使う場合に、利用者が許可したサイトのページを取得するため。インストール時には要求せず、機能を使う操作をした時にのみ、そのサイトに限って許可を求めます</td></tr>
+</table>
+
+<h2>5. 第三者への提供</h2>
+<p>利用者のデータを第三者に販売、譲渡、共有することはありません。</p>
+
+<h2>6. 児童のプライバシー</h2>
+<p>本拡張機能は児童を対象としたものではなく、児童から意図的に情報を収集することはありません。</p>
+
+<h2>7. 本ポリシーの変更</h2>
+<p>本ポリシーを変更する場合は、本ページの内容を更新し、最終更新日を改めます。重要な変更がある場合は、拡張機能の更新情報でお知らせします。</p>
+
+<h2>8. お問い合わせ</h2>
+<p>本ポリシーまたは本拡張機能に関するお問い合わせは、以下までご連絡ください。</p>
+<p>ORCA — <a href="https://github.com/ORCA-IRUKA-222/Table-csv-conversion/issues" target="_blank" rel="noopener">github.com/ORCA-IRUKA-222/Table-csv-conversion/issues</a></p>
+
+<footer>© 2026 ORCA</footer>
+
+</div>
+</body>
+</html>

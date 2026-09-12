@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-no-auto-title>
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activating your licence</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --bg:#fff; --fg:#16181d; --muted:#5b6470; --line:#e6e8ec; --card:#fafbfc; --accent:#127a52; --accent-fg:#fff; --ok:#15803d; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181b; --fg:#e8e8ea; --muted:#9aa0a6; --line:#2e3035; --card:#1e2024; --accent:#3fbb89; --accent-fg:#10231b; --ok:#4ade80; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 32px 20px;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.75 "Segoe UI", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+  }
+  .box { width: 100%; max-width: 560px; text-align: center; }
+  .topbar { position: fixed; top: 12px; right: 16px; }
+  #lang { font: inherit; font-size: 13px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+
+  .mark { width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 16px; display: grid; place-items: center; background: var(--card); border: 1px solid var(--line); font-size: 28px; }
+  .mark.ok { background: var(--ok); border-color: transparent; color: #fff; }
+  .spin { width: 26px; height: 26px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: sp .8s linear infinite; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  h1 { font-size: 1.5rem; margin: 0 0 8px; line-height: 1.4; }
+  p.sub { margin: 0; color: var(--muted); font-size: .95rem; }
+
+  .keybox { margin-top: 28px; padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); text-align: left; }
+  .keybox h2 { margin: 0 0 8px; font-size: .8rem; color: var(--muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .keyrow { display: flex; gap: 8px; }
+  .keyrow code {
+    flex: 1; min-width: 0; font-family: ui-monospace, Consolas, monospace; font-size: 13.5px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+    overflow-wrap: anywhere; user-select: all;
+  }
+  button, .btn {
+    font: inherit; font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 8px;
+    border: 1px solid transparent; background: var(--accent); color: var(--accent-fg); cursor: pointer;
+    white-space: nowrap; text-decoration: none; display: inline-block;
+  }
+  .btn-soon { background: transparent; border-color: var(--line); color: var(--muted); cursor: default; }
+  .keep { margin: 12px 0 0; color: var(--muted); font-size: .82rem; }
+  .install { margin-top: 22px; }
+  footer { margin-top: 32px; color: var(--muted); font-size: .85rem; }
+  footer a { color: inherit; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="topbar"><select id="lang" aria-label="Language"></select></div>
+
+<div class="box">
+  <div class="mark" id="mark"><div class="spin"></div></div>
+
+  <h1 id="title" data-i18n="actTitle">Activating your licence</h1>
+  <p class="sub" id="sub" data-i18n="actWorking">Activating…</p>
+
+  <div class="keybox" id="keybox" hidden>
+    <h2 data-i18n="actKey">Your licence key</h2>
+    <div class="keyrow"><code id="key"></code><button id="copy" data-i18n="actCopy">Copy</button></div>
+    <p class="keep" data-i18n="actKeep"></p>
+  </div>
+
+  <p class="install" id="install" hidden>
+    <a class="btn btn-soon" id="installLink" data-link="store" data-i18n="ctaSoon"></a>
+  </p>
+
+  <footer><a href="./">Table to CSV Exporter</a></footer>
+</div>
+
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const key = new URLSearchParams(location.search).get('key');
+  const hasKey = !!key && key !== '[license_key]';
+
+  // i18n.js の T をそのまま使う（同じクラシックスクリプトのグローバル束縛）
+  const tr = (k) => {
+    const lang = document.documentElement.lang;
+    const dict = (typeof T !== 'undefined' && T[lang]) ? T[lang] : (typeof T !== 'undefined' ? T.en : {});
+    return dict[k] || ((typeof T !== 'undefined' && T.en[k]) || '');
+  };
+  const setText = (el, k) => { el.dataset.i18n = k; const v = tr(k); if (v) el.textContent = v; };
+
+  if (hasKey) {
+    $('key').textContent = key;
+    $('keybox').hidden = false;
+  }
+
+  const say = (titleKey, subKey) => {
+    setText($('title'), titleKey);
+    setText($('sub'), subKey);
+    const tt = tr(titleKey); if (tt) document.title = tt;
+  };
+  const done   = () => { const m = $('mark'); m.classList.add('ok'); m.textContent = '✓'; say('actDone', 'actDoneSub'); };
+  const failed = () => { $('mark').textContent = '!'; say('actFail', 'actFailSub'); };
+  const noExt  = () => { $('mark').textContent = '↓'; say('actNoExt', 'actNoExtSub'); $('install').hidden = false; };
+
+  // 拡張機能のコンテンツスクリプトが状態を書き込む。一定時間来なければ未インストールとみなす。
+  let settled = false;
+  const handle = (state) => {
+    if (settled || !state) return;
+    if (state === 'installed' || state === 'working') return;   // 途中経過
+    settled = true;
+    if (state === 'done') done();
+    else if (state === 'nokey') { $('mark').textContent = '?'; say('actFail', 'actFailSub'); }
+    else failed();
+  };
+
+  window.addEventListener('t2c-activation', (e) => handle(e.detail && e.detail.state));
+  new MutationObserver(() => handle(document.documentElement.dataset.t2cState))
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-t2c-state'] });
+
+  setTimeout(() => {
+    if (settled) return;
+    settled = true;
+    if (document.documentElement.dataset.t2cState) failed();   // 拡張機能はいるが応答が無い
+    else noExt();                                              // そもそも入っていない
+  }, 4000);
+
+  $('copy').addEventListener('click', async () => {
+    const b = $('copy');
+    try { await navigator.clipboard.writeText(key || ''); } catch { return; }
+    setText(b, 'actCopied');
+    setTimeout(() => setText(b, 'actCopy'), 2000);
+  });
+})();
+</script>
+</body>
+</html>
