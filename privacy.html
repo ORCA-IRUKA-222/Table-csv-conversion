@@ -56,7 +56,6 @@
 <p>The following is kept in the browser's extension storage (<code>chrome.storage.local</code>), <strong>on your device only</strong>. It is never sent to any server.</p>
 <ul>
   <li>Your settings (header-row handling, delimiter, destination subfolder, interface language, and so on)</li>
-  <li>The number of tables exported today on the free tier (it resets when the date changes)</li>
   <li>Your paid licence key and its validation state</li>
 </ul>
 <p>All of it is removed when you uninstall the extension.</p>
@@ -77,7 +76,7 @@
   <tr><td><code>activeTab</code></td><td>To detect tables on the page you are viewing, and only when you click the toolbar icon</td></tr>
   <tr><td><code>scripting</code></td><td>To inject the table-detection script into the page you are viewing</td></tr>
   <tr><td><code>downloads</code></td><td>To save the CSV files that were created</td></tr>
-  <tr><td><code>storage</code></td><td>To keep settings, today's count and licence state on your device</td></tr>
+  <tr><td><code>storage</code></td><td>To keep settings and licence state on your device</td></tr>
   <tr><td><code>offscreen</code></td><td>To build the CSV file (creating a Blob URL) and to parse fetched HTML. The extension's background service worker has neither capability</td></tr>
   <tr><td><code>https://api.lemonsqueezy.com/*</code></td><td>To validate a licence key</td></tr>
   <tr><td>Access to other sites (optional)</td><td>To fetch pages of a site you allow, when you use "follow next page" or "also read tables on linked pages". This is not requested at install time; it is requested only when you use the feature, and only for that one site</td></tr>

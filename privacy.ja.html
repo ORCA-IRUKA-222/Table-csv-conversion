@@ -55,7 +55,6 @@
 <p>以下の情報を、ブラウザの拡張機能用ストレージ（<code>chrome.storage.local</code>）に<strong>利用者の端末内にのみ</strong>保存します。外部のサーバーへ送信されることはありません。</p>
 <ul>
   <li>拡張機能の設定（見出し行の扱い、区切り文字、保存先サブフォルダ、表示言語など）</li>
-  <li>無料版の本日の書き出し件数（日付が変わると戻ります）</li>
   <li>有料版のライセンスキーおよびその検証状態</li>
 </ul>
 <p>これらは拡張機能をアンインストールすると削除されます。</p>
@@ -78,7 +77,7 @@
   <tr><td><code>activeTab</code></td><td>アイコンをクリックした時に限り、表示中のページから表を検出するため</td></tr>
   <tr><td><code>scripting</code></td><td>表示中のページに検出スクリプトを注入するため</td></tr>
   <tr><td><code>downloads</code></td><td>作成したCSVファイルを保存するため</td></tr>
-  <tr><td><code>storage</code></td><td>設定・本日の件数・ライセンス情報を端末内に保存するため</td></tr>
+  <tr><td><code>storage</code></td><td>設定・ライセンス情報を端末内に保存するため</td></tr>
   <tr><td><code>offscreen</code></td><td>CSVファイルの組み立て（Blob URL の作成）と、取得したHTMLの解析のため。拡張機能の背景処理（service worker）にはこれらの機能が無いためです</td></tr>
   <tr><td><code>https://api.lemonsqueezy.com/*</code></td><td>ライセンスキーの検証のため</td></tr>
   <tr><td>任意のサイトへのアクセス（任意）</td><td>「ページ送りをたどる」「リンク先ページの表も取得」を使う場合に、利用者が許可したサイトのページを取得するため。インストール時には要求せず、機能を使う操作をした時にのみ、そのサイトに限って許可を求めます</td></tr>
