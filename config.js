@@ -13,7 +13,12 @@ window.SITE = {
 
 // data-link="store" / "checkout" の要素を、URLが入っていれば本物のリンクに変える。
 // i18n.js より先に読み込むこと（表示文字はそのあとで入る）。
+//
+// 購入ボタンは storeUrl が入るまで出さない。拡張機能を入れられないのに買えてしまうと、
+// 買った人が有効化するものを持てない。ストアの掲載が公開された時点で、
+// 「入手」と「購入」が同時に生きる。
 (() => {
+  const sellable = !!window.SITE.storeUrl;
   const wire = (name, url, readyKey) => {
     for (const el of document.querySelectorAll('[data-link="' + name + '"]')) {
       if (!url) continue;
@@ -26,5 +31,5 @@ window.SITE = {
     }
   };
   wire('store', window.SITE.storeUrl, 'actInstall');
-  wire('checkout', window.SITE.checkoutUrl, 'buyNow');
+  wire('checkout', sellable ? window.SITE.checkoutUrl : '', 'buyNow');
 })();
