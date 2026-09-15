@@ -7,7 +7,7 @@
    決済事業者を変えてもここを差し替えるだけで済む。 */
 
 window.SITE = {
-  storeUrl: '',
+  storeUrl: 'https://chromewebstore.google.com/detail/table-to-csv-exporter/ghkkacbmfgoknfikfhbccjnjbpmlgaed',
   checkoutUrl: 'https://pdf-downloader.lemonsqueezy.com/checkout/buy/e0549c19-2174-490e-bee9-5e4bc7110208'
 };
 
