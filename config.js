@@ -8,7 +8,7 @@
 
 window.SITE = {
   storeUrl: '',
-  checkoutUrl: ''
+  checkoutUrl: 'https://pdf-downloader.lemonsqueezy.com/checkout/buy/e0549c19-2174-490e-bee9-5e4bc7110208'
 };
 
 // data-link="store" / "checkout" の要素を、URLが入っていれば本物のリンクに変える。
