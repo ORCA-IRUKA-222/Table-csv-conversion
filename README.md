@@ -15,6 +15,9 @@ i18n.js           8言語の対訳（tools/make-site-i18n.py が生成）
 favicon.png
 demo/             試用ページ。3ページに分かれた表・ARIAグリッド・レイアウト表を置いてある
                   （tools/make-demo.py が生成）
+fonts/            見出しの英字と番号に使うフォント（Anton / JetBrains Mono、SIL OFL）。
+                  外部のフォント配信を読まないよう、ここに同梱している
+img/              紹介ページの画面写真（日本語版と英語版）。拡張機能を試用ページで実際に動かして撮ったもの
 ```
 
 ## 公開のしかた
