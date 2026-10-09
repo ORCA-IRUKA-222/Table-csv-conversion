@@ -7,38 +7,35 @@
 <title>Activating your licence</title>
 <meta name="robots" content="noindex">
 <style>
-  :root { --bg:#fff; --fg:#16181d; --muted:#5b6470; --line:#e6e8ec; --card:#fafbfc; --accent:#127a52; --accent-fg:#fff; --ok:#15803d; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#17181b; --fg:#e8e8ea; --muted:#9aa0a6; --line:#2e3035; --card:#1e2024; --accent:#3fbb89; --accent-fg:#10231b; --ok:#4ade80; }
-  }
+  :root { --bg:#000; --fg:#f2f2f3; --muted:#9c9ca6; --line:#2b2b32; --card:#1e1e23; --accent:#3fbb89; --accent-fg:#03140c; --ok:#3fbb89; color-scheme: dark; }
   * { box-sizing: border-box; }
   body {
     margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 32px 20px;
     background: var(--bg); color: var(--fg);
-    font: 16px/1.75 "Segoe UI", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+    font: 16px/1.75 "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
   }
   .box { width: 100%; max-width: 560px; text-align: center; }
   .topbar { position: fixed; top: 12px; right: 16px; }
-  #lang { font: inherit; font-size: 13px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+  #lang { font: inherit; font-size: 13px; padding: 5px 8px; border-radius: 0; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
 
-  .mark { width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 16px; display: grid; place-items: center; background: var(--card); border: 1px solid var(--line); font-size: 28px; }
-  .mark.ok { background: var(--ok); border-color: transparent; color: #fff; }
+  .mark { width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 0; display: grid; place-items: center; background: var(--card); border: 1px solid var(--line); font-size: 28px; }
+  .mark.ok { background: var(--ok); border-color: transparent; color: var(--accent-fg); }
   .spin { width: 26px; height: 26px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: sp .8s linear infinite; }
   @keyframes sp { to { transform: rotate(360deg); } }
 
   h1 { font-size: 1.5rem; margin: 0 0 8px; line-height: 1.4; }
   p.sub { margin: 0; color: var(--muted); font-size: .95rem; }
 
-  .keybox { margin-top: 28px; padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); text-align: left; }
+  .keybox { margin-top: 28px; padding: 18px; border: 1px solid var(--line); border-radius: 0; background: var(--card); text-align: left; }
   .keybox h2 { margin: 0 0 8px; font-size: .8rem; color: var(--muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
   .keyrow { display: flex; gap: 8px; }
   .keyrow code {
     flex: 1; min-width: 0; font-family: ui-monospace, Consolas, monospace; font-size: 13.5px;
-    background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 0; padding: 10px 12px;
     overflow-wrap: anywhere; user-select: all;
   }
   button, .btn {
-    font: inherit; font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 8px;
+    font: inherit; font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 0;
     border: 1px solid transparent; background: var(--accent); color: var(--accent-fg); cursor: pointer;
     white-space: nowrap; text-decoration: none; display: inline-block;
   }
